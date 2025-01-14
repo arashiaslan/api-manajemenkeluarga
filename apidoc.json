@@ -1,0 +1,228 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "FamilyService API",
+      "description": "API for managing family members",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Local Development Server"
+      }
+    ],
+    "paths": {
+      "/family": {
+        "get": {
+          "summary": "Get All Family Members",
+          "responses": {
+            "200": {
+              "description": "List of all family members",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Response"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Add a New Family Member",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewMember"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Updated list of family members",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Response"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/family/{id}": {
+        "get": {
+          "summary": "Get Family Member by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID of the family member to retrieve"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details of the family member",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Member not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Family Member by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID of the family member to update"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMember"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Updated list of family members",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Response"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Member not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Family Member by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID of the family member to delete"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Updated list of family members",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Response"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Member not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Response": {
+          "type": "object",
+          "properties": {
+            "code": { "type": "number" },
+            "status": { "type": "string" },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Member"
+              }
+            }
+          }
+        },
+        "Member": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer" },
+            "name": { "type": "string" },
+            "age": { "type": "integer" },
+            "gender": { "type": "string" }
+          }
+        },
+        "NewMember": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "age": { "type": "integer" },
+            "gender": { "type": "string" }
+          },
+          "required": ["name", "age", "gender"]
+        },
+        "UpdateMember": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "age": { "type": "integer" },
+            "gender": { "type": "string" }
+          }
+        },
+        "Error": {
+          "type": "object",
+          "properties": {
+            "message": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+  
